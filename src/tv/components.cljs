@@ -18,7 +18,8 @@
   [:header.hero.is-primary.is-bold
    [:div.hero-body
     [:div.container
-     [:h1.hero-title.has-text-weight-bold.is-size-1 "Dagskrá RÚV"]
+     [:h1.hero-title.has-text-weight-bold.is-size-1
+      "Dagskrá RÚV"]
      [:h2.subtitle
       (when (seq schedule)
         (str (count schedule) " shows"))
