@@ -2,14 +2,11 @@
  :dependencies [[camel-snake-kebab/camel-snake-kebab "0.4.2"]
                 [cider/cider-nrepl "0.22.4"]
                 [clj-commons/citrus "3.2.3"]
-                [clj-fuzzy/clj-fuzzy "0.4.1"]
                 [rum/rum "0.12.3"]]
  :dev-http {8080 "public"}
  :nrepl {:port 55555}
- :builds
- {:app
-  {:target :browser
-   :output-dir "public/scripts"
-   :asset-path "/scripts"
-   :compiler-options {:infer-externs :auto}
-   :modules {:main {:entries [tv.core]}}}}}
+ :builds {:app {:target :browser
+                :output-dir "public/scripts"
+                :asset-path "/scripts"
+                :compiler-options {:infer-externs :auto}
+                :modules {:main {:entries [tv.core]}}}}}

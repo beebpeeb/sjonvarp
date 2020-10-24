@@ -14,15 +14,16 @@
 
 ;;; Hero
 
-(rum/defc hero < rum/static [{:keys [schedule]}]
+(rum/defc hero < rum/static [{:keys [error schedule]}]
   [:header.hero.is-primary.is-bold
    [:div.hero-body
     [:div.container
      [:h1.hero-title.has-text-weight-bold.is-size-1 "Dagskrá RÚV"]
      [:h2.subtitle
-      (if (seq schedule)
-        (str (count schedule) " shows")
-        "Loading...")]]]])
+      (when (seq schedule)
+        (str (count schedule) " shows"))
+      (when error
+        (str "Something went wrong! " error))]]]])
 
 ;;; TV Schedule
 

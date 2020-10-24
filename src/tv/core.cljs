@@ -5,15 +5,15 @@
             [citrus.core :as citrus]
             [rum.core :as rum]
             [tv.components :as components]
-            [tv.show :as show]
-            [tv.specs :as specs]))
+            [tv.show :refer [map->TVShow]]
+            [tv.specs :refer [validate-schedule]]))
 
 ;;; Helpers
 
 (defn response->schedule [response]
   (some->> (:results response)
-           (map show/map->Show)
-           (specs/validate-schedule)))
+           (map map->TVShow)
+           (validate-schedule)))
 
 ;;; Controller
 
