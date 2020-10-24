@@ -1,0 +1,6 @@
+{:deps {camel-snake-kebab/camel-snake-kebab {:mvn/version "0.4.2"}
+        cider/cider-nrepl {:mvn/version "0.25.4"}
+        clj-commons/citrus {:mvn/version "3.2.3"}
+        rum/rum {:mvn/version "0.12.3"}
+        thheller/shadow-cljs {:mvn/version "2.11.5"}}
+ :paths ["src"]}
