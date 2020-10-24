@@ -1,0 +1,15 @@
+{
+  "private": true,
+  "devDependencies": {
+    "bulma": "^0.9.1",
+    "moment": "^2.29.1",
+    "react": "^17.0.1",
+    "react-dom": "^17.0.1",
+    "shadow-cljs": "^2.11.5"
+  },
+  "scripts": {
+    "build": "shadow-cljs release app",
+    "pom": "shadow-cljs pom",
+    "start": "shadow-cljs watch app"
+  }
+}
