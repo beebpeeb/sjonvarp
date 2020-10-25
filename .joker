@@ -1,0 +1,1 @@
+{:known-macros [rum.core/defc]}

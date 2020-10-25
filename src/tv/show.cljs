@@ -44,7 +44,7 @@
     (cond
       (true? live) :live
       (has-suffix? description) :repeat
-      :else :no-status))
+      :else nil))
   (subtitle [_]
     (when (unique? title original-title)
       (trim original-title)))

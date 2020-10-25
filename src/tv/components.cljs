@@ -1,11 +1,11 @@
 (ns tv.components
   (:require [citrus.core :as citrus]
-            [rum.core :as rum]
+            [rum.core :as rum :refer [defc]]
             [tv.show :as show]))
 
 ;;; Status
 
-(rum/defc status < rum/static [show]
+(defc status-badge < rum/static [show]
   [:div.status-badge
    (case (show/status show)
      :live [:span.tag.is-danger "Live"]
@@ -14,26 +14,28 @@
 
 ;;; Hero
 
-(rum/defc hero < rum/static [{:keys [error schedule]}]
+(defc hero < rum/static [{:keys [error schedule]}]
   [:header.hero.is-primary.is-bold
    [:div.hero-body
     [:div.container
      [:h1.hero-title.has-text-weight-bold.is-size-1
       "Dagskrá RÚV"]
      [:h2.subtitle
-      (when (seq schedule)
-        (str (count schedule) " shows"))
+      (if (seq schedule)
+        (str (count schedule) " shows")
+        "Loading...")]
+     [:h2.subtitle
       (when error
         (str "Something went wrong! " error))]]]])
 
 ;;; TV Schedule
 
-(rum/defc tv-show < rum/static [show]
+(defc tv-show < rum/static [show]
   [:div.columns
    [:div.column.is-2
     [:h3.has-text-grey-light.has-text-weight-bold.is-size-5
      (show/start-time show)]
-    (status show)]
+    (status-badge show)]
    [:div.column
     [:h3.has-text-weight-bold.has-text-primary.is-size-4
      (show/title show)]
@@ -42,7 +44,7 @@
     (when-some [description (show/description show)]
      [:p.has-text-weight-light description])]])
 
-(rum/defc tv-schedule < rum/static [{:keys [schedule]}]
+(defc tv-schedule < rum/static [{:keys [schedule]}]
   (when (seq schedule)
     (let [render #(rum/with-key (tv-show %) (show/react-key %))]
       [:section.container
@@ -50,7 +52,7 @@
 
 ;;; Container
 
-(rum/defc container < rum/reactive [reconciler]
+(defc container < rum/reactive [reconciler]
   (let [subscription (rum/react (citrus/subscription reconciler [:schedule]))]
     (conj [:div#components]
           (hero subscription)
