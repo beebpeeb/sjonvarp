@@ -1,4 +1,5 @@
 /.*
 !/.gitignore
+/*.iml
 /node_modules/
 /public/scripts/
