@@ -35,12 +35,10 @@
   (when (unique? title originalTitle)
     (trim originalTitle)))
 
-(defrecord TVShow [description react-key start-time status subtitle title])
-
 (defn tv-show [{:keys [startTime title] :as m}]
-  (map->TVShow {::description (description m)
-                ::react-key (react-key m)
-                ::start-time (moment/moment startTime)
-                ::status (status m)
-                ::subtitle (subtitle m)
-                ::title (trim title)}))
+  {::description (description m)
+   ::react-key (react-key m)
+   ::start-time (moment/moment startTime)
+   ::status (status m)
+   ::subtitle (subtitle m)
+   ::title (trim title)})
