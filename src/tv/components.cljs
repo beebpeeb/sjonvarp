@@ -30,7 +30,8 @@
 
 ;;; TV Schedule
 
-(defc tv-show < rum/static [{:tv.show/keys [description start-time status subtitle title]}]
+(defc tv-show < rum/static
+  [{:tv.show/keys [description start-time status subtitle title]}]
   [:div.columns
    [:div.column.is-2
     [:h3.has-text-grey-light.has-text-weight-bold.is-size-4
@@ -39,10 +40,10 @@
    [:div.column
     [:h3.has-text-weight-bold.has-text-primary.is-size-4
      title]
-    (when subtitle
+    (when (some? subtitle)
       [:h5.has-text-grey-light.is-italic.is-size-7 subtitle])
-    (when description
-     [:p.has-text-weight-light description])]])
+    (when (some? description)
+      [:p.has-text-weight-light description])]])
 
 (defc tv-schedule < rum/static [{:keys [schedule]}]
   [:section#schedule.container

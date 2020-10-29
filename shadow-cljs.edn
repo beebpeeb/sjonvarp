@@ -1,5 +1,4 @@
-{:dependencies [[camel-snake-kebab/camel-snake-kebab "0.4.2"]
-                [cider/cider-nrepl "0.25.4"]
+{:dependencies [[cider/cider-nrepl "0.25.4"]
                 [clj-commons/citrus "3.2.3"]
                 [rum/rum "0.12.3"]]
  :source-paths ["src"]

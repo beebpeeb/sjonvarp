@@ -2,8 +2,6 @@
   (:require [clojure.string :as string]
             [tv.moment :as moment]))
 
-;;; Helpers
-
 (def trim (comp string/trim-newline string/trim))
 
 (def re #"(\W+)\s*e.\s*$")
