@@ -1,10 +1,7 @@
 (ns tv.components
   (:require [citrus.core :as citrus]
             [rum.core :as rum :refer [defc]]
-            [tv.moment :as moment]
-            [tv.show :as show]))
-
-;;; Status
+            [tv.moment :as moment]))
 
 (defc status-badge < rum/static [status]
   [:div.status-badge
@@ -12,8 +9,6 @@
      :live [:span.tag.is-danger "Live"]
      :repeat [:span.tag.is-info "Repeat"]
      nil)])
-
-;;; Hero
 
 (defc hero < rum/static [{:keys [error schedule]}]
   [:header.hero.is-primary.is-bold
@@ -27,8 +22,6 @@
      (when (some? error)
        [:h2.subtitle
         (str "Something went wrong! " error)])]]])
-
-;;; TV Schedule
 
 (defc tv-show < rum/static
   [{:tv.show/keys [description start-time status subtitle title]}]
@@ -52,8 +45,6 @@
        (mapv render schedule))
      [:h3.has-text-grey-light.is-italic.is-size-5
       "Loading..."])])
-
-;;; Container
 
 (defc container < rum/reactive [reconciler]
   (let [subscription (rum/react (citrus/subscription reconciler [:schedule]))]

@@ -10,8 +10,7 @@
   (some? (re-find re s)))
 
 (defn strip-suffix [s]
-  (-> (string/replace s re "$1")
-      (trim)))
+  (string/replace s re "$1"))
 
 (defn same? [a b]
   (let [f (comp trim string/lower-case)]
@@ -21,7 +20,7 @@
 
 (defn description [{:keys [description]}]
   (when-not (string/blank? description)
-    (strip-suffix description)))
+    (strip-suffix (trim description))))
 
 (defn react-key [{:keys [startTime]}]
   (str "ruv/" (moment/timestamp startTime)))
