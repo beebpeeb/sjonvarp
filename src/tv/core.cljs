@@ -12,8 +12,10 @@
 ;;; Helpers
 
 (defn response->schedule [{:keys [results]}]
-  (let [schedule (map tv-show results)]
-    schedule))
+  (when-some [schedule (map tv-show results)]
+    (if (valid-schedule? schedule)
+      schedule
+      (explain-schedule schedule))))
 
 ;;; Controller
 
