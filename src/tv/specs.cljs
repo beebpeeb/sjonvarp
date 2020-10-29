@@ -30,6 +30,5 @@
 
 ;;; API
 
-(def conform-schedule (partial spec/conform ::tv-schedule))
 (def explain-schedule (partial spec/explain ::tv-schedule))
 (def valid-schedule? (partial spec/valid? ::tv-schedule))
