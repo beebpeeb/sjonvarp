@@ -1,19 +1,19 @@
 (ns tv.core
   (:require [goog.dom :as dom]
-            [camel-snake-kebab.core :refer [->kebab-case-keyword]]
-            [camel-snake-kebab.extras :refer [transform-keys]]
+            [clojure.walk :refer [keywordize-keys]]
             [citrus.core :as citrus]
             [rum.core :as rum]
             [tv.components :as components]
-            [tv.show :refer [map->TVShow]]
-            [tv.specs :refer [validate-schedule]]))
+            [tv.show :refer [tv-show]]
+            [tv.specs :refer [explain-schedule valid-schedule?]]))
+
+(enable-console-print!)
 
 ;;; Helpers
 
-(defn response->schedule [response]
-  (some->> (:results response)
-           (map map->TVShow)
-           (validate-schedule)))
+(defn response->schedule [{:keys [results]}]
+  (let [schedule (map tv-show results)]
+    schedule))
 
 ;;; Controller
 
@@ -37,7 +37,7 @@
   (-> (js/fetch url)
       (.then #(.json %))
       (.then #(js->clj %))
-      (.then #(transform-keys ->kebab-case-keyword %))
+      (.then #(keywordize-keys %))
       (.then #(citrus/dispatch! reconciler controller on-ok %))
       (.catch #(citrus/dispatch! reconciler controller on-failed %))))
 

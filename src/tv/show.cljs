@@ -6,13 +6,13 @@
 
 (def trim (comp string/trim-newline string/trim))
 
-(def regex #"(\W+)\s*e.\s*$")
+(def re #"(\W+)\s*e.\s*$")
 
 (defn has-suffix? [s]
-  (some? (re-find regex s)))
+  (some? (re-find re s)))
 
 (defn strip-suffix [s]
-  (-> (string/replace s regex "$1")
+  (-> (string/replace s re "$1")
       (trim)))
 
 (defn same? [a b]
@@ -21,32 +21,29 @@
 
 (def unique? (complement same?))
 
-;;; Protocol
+(defn description [{:keys [description]}]
+  (when-not (string/blank? description)
+    (strip-suffix description)))
 
-(defprotocol TVShowProtocol
-  (description [this] "Returns the normalized description of the given show or nil")
-  (react-key [this] "Returns a unique React render key for the given show")
-  (start-time [this] "Returns the start time of the given show")
-  (status [this] "Returns the transmission status of the given show")
-  (subtitle [this] "Returns the subtitle of the given show or nil")
-  (title [this] "Returns the title of the given show"))
+(defn react-key [{:keys [startTime]}]
+  (str "ruv/" (moment/timestamp startTime)))
 
-(defrecord TVShow [description live original-title start-time title]
-  TVShowProtocol
-  (description [_]
-    (when-not (string/blank? description)
-      (strip-suffix description)))
-  (react-key [_]
-    (str "ruv/" (moment/timestamp start-time)))
-  (start-time [_]
-    (moment/time-string start-time))
-  (status [_]
-    (cond
-      (true? live) :live
-      (has-suffix? description) :repeat
-      :else nil))
-  (subtitle [_]
-    (when (unique? title original-title)
-      (trim original-title)))
-  (title [_]
-    (trim title)))
+(defn status [{:keys [description live]}]
+  (cond
+    (true? live) :live
+    (has-suffix? description) :repeat
+    :else :no-status))
+
+(defn subtitle [{:keys [originalTitle title]}]
+  (when (unique? title originalTitle)
+    (trim originalTitle)))
+
+(defrecord TVShow [description react-key start-time status subtitle title])
+
+(defn tv-show [{:keys [startTime title] :as m}]
+  (map->TVShow {::description (description m)
+                ::react-key (react-key m)
+                ::start-time (moment/moment startTime)
+                ::status (status m)
+                ::subtitle (subtitle m)
+                ::title (trim title)}))

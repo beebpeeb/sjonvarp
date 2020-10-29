@@ -5,26 +5,31 @@
 
 ;;; General
 
-(spec/def ::date-time moment/date-time?)
+(spec/def ::date-time moment/moment?)
 (spec/def ::non-empty-string (complement string/blank?))
 
-;;; TV Shows
+;;; TV Show
 
-(spec/def ::description string?)
-(spec/def ::live boolean?)
-(spec/def ::original-title string?)
-(spec/def ::start-time ::date-time)
-(spec/def ::title ::non-empty-string)
+(spec/def :tv.show/description (spec/nilable string?))
+(spec/def :tv.show/react-key string?)
+(spec/def :tv.show/start-time ::date-time)
+(spec/def :tv.show/status #{:live :repeat :no-status})
+(spec/def :tv.show/subtitle (spec/nilable string?))
+(spec/def :tv.show/title ::non-empty-string)
 
-(spec/def ::show
-  (spec/keys :req-un [::live ::start-time ::title]
-             :opt-un [::description ::original-title]))
+(spec/def ::tv-show
+  (spec/keys :req [:tv.show/description
+                   :tv.show/react-key
+                   :tv.show/start-time
+                   :tv.show/status
+                   :tv.show/subtitle
+                   :tv.show/title]))
 
-(spec/def ::schedule (spec/coll-of ::show :distinct true :min-count 1))
+(spec/def ::tv-schedule
+  (spec/coll-of ::tv-show :distinct true :min-count 1))
 
 ;;; API
 
-(defn validate-schedule [schedule]
-  (if (spec/valid? ::schedule schedule)
-    schedule
-    (spec/explain ::schedule schedule)))
+(def conform-schedule (partial spec/conform ::tv-schedule))
+(def explain-schedule (partial spec/explain ::tv-schedule))
+(def valid-schedule? (partial spec/valid? ::tv-schedule))

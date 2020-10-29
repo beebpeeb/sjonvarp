@@ -1,5 +1,4 @@
 /.*
 !/.gitignore
-!/.joker
 /node_modules/
 /public/scripts/

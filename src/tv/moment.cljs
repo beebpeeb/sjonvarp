@@ -4,7 +4,7 @@
 (defn moment [s]
   (moment-js s "YYYY-MM-DD HH:mm:ss" true))
 
-(defn date-time? [s]
+(defn moment? [s]
   (some-> (moment s)
           (.isValid)))
 
