@@ -11,7 +11,9 @@
 
 ;;; Helpers
 
-(defn response->schedule [{:keys [results]}]
+(defn response->schedule
+  "Constructs a TV schedule from the given API response"
+  [{:keys [results]}]
   (when-some [schedule (map tv-show results)]
     (if (valid-schedule? schedule)
       schedule
