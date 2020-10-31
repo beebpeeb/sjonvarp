@@ -28,7 +28,10 @@
 (spec/def ::tv-schedule
   (spec/coll-of ::tv-show :distinct true :min-count 1))
 
-;;; API
+;;; Convenience API
 
 (def explain-schedule (partial spec/explain ::tv-schedule))
+(def explain-show (partial spec/explain ::tv-show))
+
 (def valid-schedule? (partial spec/valid? ::tv-schedule))
+(def valid-show? (partial spec/valid? ::tv-show))
