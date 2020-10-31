@@ -1,8 +1,10 @@
 (ns tv.moment
   (:require ["moment" :as moment-js]))
 
+(def date-time-format "YYYY-MM-DD HH:mm:ss")
+
 (defn moment [s]
-  (moment-js s "YYYY-MM-DD HH:mm:ss" true))
+  (moment-js s date-time-format true))
 
 (defn moment? [s]
   (some-> (moment s)

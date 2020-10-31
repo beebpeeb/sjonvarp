@@ -2,4 +2,5 @@
 !/.gitignore
 /*.iml
 /node_modules/
-/public/scripts/
+/resources/public/js/
+/target/

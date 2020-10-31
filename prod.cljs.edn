@@ -1,0 +1,10 @@
+{:main tv.core
+ :optimizations :advanced
+ :output-to "target/public/js/index.js"
+ :output-dir "target/public/js"
+ :parallel-build true
+ :infer-externs true
+ :target :bundle
+ :bundle-cmd {:default ["npx" "webpack"]}
+ :closure-defines {cljs.core/*global* "window"
+                   "goog.DEBUG" false}}

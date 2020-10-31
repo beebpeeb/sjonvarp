@@ -16,12 +16,11 @@
     [:div.container
      [:h1.hero-title.has-text-weight-bold.is-size-1
       "Dagskrá RÚV"]
-     (when (seq schedule)
-       [:h2.subtitle
-        (str (count schedule) " shows")])
-     (when (some? error)
-       [:h2.subtitle
-        (str "Something went wrong! " error)])]]])
+     [:h2.subtitle
+      (when (some? (seq schedule))
+        (str (count schedule) " shows"))
+      (when (some? error)
+        (str "Something went wrong! " error))]]]])
 
 (defc tv-show < rum/static
   [{:tv.show/keys [description start-time status subtitle title]}]
@@ -40,7 +39,7 @@
 
 (defc tv-schedule < rum/static [{:keys [schedule]}]
   [:section#schedule.container
-   (if (seq schedule)
+   (if (some? (seq schedule))
      (let [render #(rum/with-key (tv-show %) (:tv.show/react-key %))]
        (mapv render schedule))
      [:h3.has-text-grey-light.is-italic.is-size-5
