@@ -35,7 +35,9 @@
   (when (unique? title originalTitle)
     (trim originalTitle)))
 
-(defn tv-show [{:keys [startTime title] :as m}]
+(defn tv-show
+  "Constructs a valid TV show from the given map"
+  [{:keys [startTime title] :as m}]
   {::description (description m)
    ::react-key (react-key m)
    ::start-time (moment/moment startTime)
