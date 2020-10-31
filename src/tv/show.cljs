@@ -29,7 +29,7 @@
   (cond
     (true? live) :live
     (has-suffix? description) :repeat
-    :else :no-status))
+    :else nil))
 
 (defn subtitle [{:keys [originalTitle title]}]
   (when (unique? title originalTitle)
