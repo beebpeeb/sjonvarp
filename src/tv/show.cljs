@@ -20,7 +20,7 @@
 
 (defn description [{:keys [description]}]
   (when-not (string/blank? description)
-    (strip-suffix (trim description))))
+    (trim (strip-suffix description))))
 
 (defn react-key [{:keys [startTime]}]
   (str "ruv/" (moment/timestamp startTime)))
