@@ -11,7 +11,7 @@
 ;;; TV Show
 
 (spec/def :tv.show/description (spec/nilable string?)) ; any string or nil
-(spec/def :tv.show/react-key string?) ; any string
+(spec/def :tv.show/react-key ::non-empty-string) ; string which is known not to be empty
 (spec/def :tv.show/start-time ::date-time) ; valid date-time
 (spec/def :tv.show/status (spec/nilable #{:live :repeat})) ; keyword or nil
 (spec/def :tv.show/subtitle (spec/nilable string?)) ; any string or nil
