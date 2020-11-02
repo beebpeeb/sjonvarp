@@ -1,6 +1,6 @@
 /.*
+!/.dir-locals.el
 !/.gitignore
-/*.iml
 /node_modules/
 /resources/public/js/
 /target/
