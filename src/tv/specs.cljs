@@ -3,19 +3,25 @@
             [clojure.string :as string]
             [tv.moment :as moment]))
 
+;;; Predicates
+
+(defn react-key? [s]
+  (some? (re-find #"^ruv/\d+$" (str s))))
+
 ;;; General
 
 (spec/def ::date-time moment/moment?)
 (spec/def ::non-empty-string (complement string/blank?))
+(spec/def ::react-key react-key?)
 
 ;;; TV Show
 
-(spec/def :tv.show/description (spec/nilable string?)) ; any string or nil
-(spec/def :tv.show/react-key string?) ; any string
-(spec/def :tv.show/start-time ::date-time) ; valid date-time
-(spec/def :tv.show/status (spec/nilable #{:live :repeat})) ; keyword or nil
-(spec/def :tv.show/subtitle (spec/nilable string?)) ; any string or nil
-(spec/def :tv.show/title ::non-empty-string) ; string which is known not to be empty
+(spec/def :tv.show/description (spec/nilable string?))
+(spec/def :tv.show/react-key ::react-key)
+(spec/def :tv.show/start-time ::date-time)
+(spec/def :tv.show/status (spec/nilable #{:live :repeat}))
+(spec/def :tv.show/subtitle (spec/nilable string?))
+(spec/def :tv.show/title ::non-empty-string)
 
 (spec/def ::tv-show
   (spec/keys :req [:tv.show/description

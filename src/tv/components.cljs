@@ -7,11 +7,11 @@
   [:div.status-badge
    (case status
      :live [:span.tag.is-danger "Live"]
-     :repeat [:span.tag.is-info "Repeat"]
+     :repeat [:span.tag.is-success "Repeat"]
      nil)])
 
 (defc hero < rum/static [{:keys [error schedule]}]
-  [:header.hero.is-primary.is-bold
+  [:header.hero.is-info.is-bold
    [:div.hero-body
     [:div.container
      [:h1.hero-title.has-text-weight-bold.is-size-1
@@ -30,7 +30,7 @@
      (moment/time-string start-time)]
     (status-badge status)]
    [:div.column
-    [:h3.has-text-weight-bold.has-text-primary.is-size-4
+    [:h3.has-text-weight-bold.has-text-info.is-size-4
      title]
     (when (some? subtitle)
       [:h5.has-text-grey-light.is-italic.is-size-7 subtitle])
