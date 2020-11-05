@@ -3,7 +3,7 @@
             [rum.core :as rum :refer [defc]]
             [tv.moment :as moment]))
 
-(def flavors #{:danger :danger :info :light :link :primary :success :warning})
+(def flavors #{:danger :dark :info :light :link :primary :success :warning})
 
 (defc progress-bar < rum/static [& flavor]
   [:progress.progress.is-small
