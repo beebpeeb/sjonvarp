@@ -3,6 +3,13 @@
             [rum.core :as rum :refer [defc]]
             [tv.moment :as moment]))
 
+(def flavors #{:danger :danger :info :light :link :primary :success :warning})
+
+(defc progress-bar < rum/static [& flavor]
+  [:progress.progress.is-small
+   (when (some? (flavors flavor))
+     {:class (str "is-" (name flavor))})])
+
 (defc status-badge < rum/static [status]
   [:div.status-badge
    (case status
@@ -43,7 +50,7 @@
      (let [render #(-> (tv-show %)
                        (rum/with-key (:tv.show/react-key %)))]
        (mapv render schedule))]
-    [:progress.progress.is-small.is-danger]))
+    (progress-bar :danger)))
 
 (defc container < rum/reactive [reconciler]
   (let [subscription (rum/react (citrus/subscription reconciler [:schedule]))]
