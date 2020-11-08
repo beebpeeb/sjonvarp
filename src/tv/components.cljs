@@ -5,7 +5,7 @@
 
 (def flavors #{:danger :dark :info :light :link :primary :success :warning})
 
-(defc progress-bar < rum/static [& flavor]
+(defc progress-bar < rum/static [& [flavor]]
   [:progress.progress.is-small
    (when (some? (flavors flavor))
      {:class (str "is-" (name flavor))})])

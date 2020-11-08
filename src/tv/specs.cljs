@@ -5,14 +5,9 @@
 
 ;;; Predicates
 
-(defn react-key? [s]
-  (some? (re-find #"^ruv/\d+$" (str s))))
-
-;;; General
-
 (spec/def ::date-time moment/moment?)
 (spec/def ::non-empty-string (complement string/blank?))
-(spec/def ::react-key react-key?)
+(spec/def ::react-key #(some? (re-find #"^ruv/\d+$" (str %))))
 
 ;;; TV Show
 
@@ -34,7 +29,7 @@
 (spec/def ::tv-schedule
   (spec/coll-of ::tv-show :distinct true :min-count 1))
 
-;;; Convenience API
+;;; Convenience partials
 
 (def explain-schedule (partial spec/explain ::tv-schedule))
 (def valid-schedule? (partial spec/valid? ::tv-schedule))

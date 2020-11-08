@@ -27,10 +27,10 @@
   {:effect/http {:on-failed :fetch-failed
                  :on-ok :fetch-ok
                  :url "https://apis.is/tv/ruv"}
-   :state {:error nil :schedule nil}})
+   :state {:error nil :loading? true :schedule nil}})
 
 (defmethod control-schedule :fetch-ok [_ [response] state]
-  {:state (assoc state :schedule (response->schedule response))})
+  {:state (assoc state :loading? false :schedule (response->schedule response))})
 
 (defmethod control-schedule :fetch-failed [_ [error] state]
   {:state (assoc state :error (.-message error))})
