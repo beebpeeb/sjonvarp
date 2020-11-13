@@ -5,11 +5,9 @@
 
 (def flavors #{:danger :dark :info :light :link :primary :success :warning})
 
-(def flavor? (partial some? flavors))
-
 (defc progress-bar < rum/static [& [flavor]]
   [:progress.progress.is-small
-   (when (flavor? flavor)
+   (when (some? (flavors flavor))
      {:class (str "is-" (name flavor))})])
 
 (defc status-badge < rum/static [status]
@@ -25,11 +23,10 @@
     [:div.container
      [:h1.hero-title.has-text-weight-bold.is-size-1
       "Dagskrá RÚV"]
-     [:h2.subtitle
-      (when (some? (seq schedule))
-        (str (count schedule) " shows"))
-      (when (some? error)
-        (str "Something went wrong! " error))]]]])
+     (when (some? (seq schedule))
+       [:h2.subtitle (str (count schedule) " shows")])
+     (when (some? error)
+       [:h2.subtitle (str "Something went wrong! " error)])]]])
 
 (defc tv-show < rum/static
   [{:tv.show/keys [description start-time status subtitle title]}]
@@ -46,7 +43,7 @@
     (when (some? description)
       [:p.has-text-weight-light description])]])
 
-(defc tv-schedule < rum/static [{:keys [schedule]}]
+(defc tv-schedule < rum/static [{:keys [loading? schedule]}]
   (if (some? (seq schedule))
     [:section#schedule.container
      (let [render #(-> (tv-show %)

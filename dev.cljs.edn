@@ -1,10 +1,8 @@
-^{:auto-bundle :webpack
-  :clean-outputs true}
 {:main tv.core
  :optimizations :none
  :output-dir "target/public/js"
- :compiler-stats true
  :parallel-build true
+ :compiler-stats true
  :source-map true
  :source-map-timestamp true
  :target :bundle}
