@@ -5,5 +5,4 @@
         com.bhauman/rebel-readline-cljs {:mvn/version "0.1.4"}
         rum/rum {:mvn/version "0.12.3"}}
  :paths ["src" "resources" "target"]
- :aliases {:dev {:main-opts ["-m" "figwheel.main" "-b" "dev" "-r"]}
-           :prod {:main-opts ["-m" "figwheel.main" "-bo" "prod"]}}}
+ :aliases {:dev {:main-opts ["-m" "figwheel.main" "-b" "dev" "-r"]}}}
