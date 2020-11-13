@@ -1,4 +1,5 @@
-^{:auto-bundle :webpack}
+^{:auto-bundle :webpack
+  :clean-outputs true}
 {:main tv.core
  :optimizations :none
  :output-dir "target/public/js"

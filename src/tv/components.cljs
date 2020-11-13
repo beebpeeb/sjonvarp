@@ -5,9 +5,11 @@
 
 (def flavors #{:danger :dark :info :light :link :primary :success :warning})
 
+(def flavor? (partial some? flavors))
+
 (defc progress-bar < rum/static [& [flavor]]
   [:progress.progress.is-small
-   (when (some? (flavors flavor))
+   (when (flavor? flavor)
      {:class (str "is-" (name flavor))})])
 
 (defc status-badge < rum/static [status]
