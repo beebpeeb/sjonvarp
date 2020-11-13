@@ -1,10 +1,9 @@
+^{:auto-bundle :webpack}
 {:main tv.core
  :optimizations :none
- :output-to "target/public/js/index.js"
  :output-dir "target/public/js"
  :compiler-stats true
  :parallel-build true
  :source-map true
  :source-map-timestamp true
- :target :bundle
- :bundle-cmd {:none ["npx" "webpack" "--mode=development"]}}
+ :target :bundle}

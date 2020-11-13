@@ -1,0 +1,9 @@
+{:main tv.core
+ :optimizations :advanced
+ :closure-defines {cljs.core/*global* "window"}
+ :output-to "target/public/js/index.js"
+ :output-dir "target/public/js"
+ :compiler-stats true
+ :parallel-build true
+ :target :bundle
+ :bundle-cmd {:default ["npx" "webpack"]}}
