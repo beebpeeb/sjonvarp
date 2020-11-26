@@ -8,13 +8,14 @@
 (spec/def ::date-time moment/moment?)
 (spec/def ::non-empty-string (complement string/blank?))
 (spec/def ::react-key #(some? (re-find #"^ruv/\d+$" (str %))))
+(spec/def ::status (spec/nilable #{:live :repeat}))
 
 ;;; TV Show
 
 (spec/def :tv.show/description (spec/nilable string?))
 (spec/def :tv.show/react-key ::react-key)
 (spec/def :tv.show/start-time ::date-time)
-(spec/def :tv.show/status (spec/nilable #{:live :repeat}))
+(spec/def :tv.show/status ::status)
 (spec/def :tv.show/subtitle (spec/nilable string?))
 (spec/def :tv.show/title ::non-empty-string)
 

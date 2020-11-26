@@ -1,6 +1,6 @@
 (ns tv.core
   (:require [goog.dom :as dom]
-            [clojure.walk :refer [keywordize-keys]]
+            [ajax.core :refer [GET]]
             [citrus.core :as citrus]
             [rum.core :as rum]
             [tv.components :as components]
@@ -27,23 +27,21 @@
   {:effect/http {:on-failed :fetch-failed
                  :on-ok :fetch-ok
                  :url "https://apis.is/tv/ruv"}
-   :state {:error nil :loading? true :schedule nil}})
+   :state {:error nil :schedule nil}})
 
 (defmethod control-schedule :fetch-ok [_ [response] state]
-  {:state (assoc state :loading? false :schedule (response->schedule response))})
+  {:state (assoc state :schedule (response->schedule response))})
 
 (defmethod control-schedule :fetch-failed [_ [error] state]
-  {:state (assoc state :error (.-message error))})
+  {:state (assoc state :error (:status-text error))})
 
-;;; Effects
+;;; Native effects
 
 (defn fetch! [reconciler controller {:keys [on-failed on-ok url]}]
-  (-> (js/fetch url)
-      (.then #(.json %))
-      (.then #(js->clj %))
-      (.then #(keywordize-keys %))
-      (.then #(citrus/dispatch! reconciler controller on-ok %))
-      (.catch #(citrus/dispatch! reconciler controller on-failed %))))
+  (GET url {:response-format :json
+            :keywords? true
+            :handler #(citrus/dispatch! reconciler controller on-ok %)
+            :error-handler #(citrus/dispatch! reconciler controller on-failed %)}))
 
 ;;; Reconciler
 
@@ -57,4 +55,4 @@
 
 (defonce init-ctrl (citrus/broadcast-sync! reconciler :init))
 
-(rum/mount (components/container reconciler) (dom/getElement "main"))
+(rum/mount (components/Container reconciler) (dom/getElement "main"))
