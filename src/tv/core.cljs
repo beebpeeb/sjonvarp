@@ -1,6 +1,6 @@
 (ns tv.core
   (:require [goog.dom :as dom]
-            [ajax.core :refer [GET]]
+            [ajax.core :as ajax]
             [citrus.core :as citrus]
             [rum.core :as rum]
             [tv.components :as components]
@@ -38,10 +38,10 @@
 ;;; Native effects
 
 (defn fetch! [reconciler controller {:keys [on-failed on-ok url]}]
-  (GET url {:response-format :json
-            :keywords? true
-            :handler #(citrus/dispatch! reconciler controller on-ok %)
-            :error-handler #(citrus/dispatch! reconciler controller on-failed %)}))
+  (ajax/GET url {:response-format :json
+                 :keywords? true
+                 :handler #(citrus/dispatch! reconciler controller on-ok %)
+                 :error-handler #(citrus/dispatch! reconciler controller on-failed %)}))
 
 ;;; Reconciler
 
