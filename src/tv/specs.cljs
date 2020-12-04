@@ -34,6 +34,3 @@
 
 (def explain-schedule (partial spec/explain ::tv-schedule))
 (def valid-schedule? (partial spec/valid? ::tv-schedule))
-
-(def explain-show (partial spec/explain ::tv-show))
-(def valid-show? (partial spec/valid? ::tv-show))
