@@ -12,7 +12,7 @@
 ;;; Helpers
 
 (defn response->schedule
-  "Constructs a TV schedule from the given API response"
+  "Constructs a TV schedule from the given API response, when valid, or returns nil"
   [{:keys [results]}]
   (when-some [schedule (map tv-show results)]
     (if (valid-schedule? schedule)
@@ -35,13 +35,13 @@
 (defmethod control-schedule :fetch-failed [_ [error] state]
   {:state (assoc state :error (:status-text error))})
 
-;;; Native effects
+;;; Effects
 
 (defn fetch! [reconciler controller {:keys [on-failed on-ok url]}]
-  (ajax/GET url {:response-format :json
-                 :keywords? true
+  (ajax/GET url {:error-handler #(citrus/dispatch! reconciler controller on-failed %)
                  :handler #(citrus/dispatch! reconciler controller on-ok %)
-                 :error-handler #(citrus/dispatch! reconciler controller on-failed %)}))
+                 :keywords? true
+                 :response-format :json}))
 
 ;;; Reconciler
 

@@ -1,2 +1,2 @@
-{:auto-bundle :webpack
+{:auto-bundle :parcel
  :clean-outputs true}
